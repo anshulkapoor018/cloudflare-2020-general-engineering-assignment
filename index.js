@@ -69,12 +69,26 @@ class SocialDivTransformer {
     this.attributeName = attributeName
   }
   element(element) {
-    // const linkArrayTags = []
-    // for (var x = 0; x < linkArray.length; x++) {
-    //   let content = "<a href=" + linkArray[x]["url"] + ">" + linkArray[x]["name"] + "</a>"
-    //   linkArrayTags.push(content)
-    // }
     element.setInnerContent(socialLinksArray[0], { html: true })
+  }
+}
+
+class TitleTransformer {
+  constructor(attributeName) {
+    this.attributeName = attributeName
+  }
+  element(element) {
+    element.setInnerContent("Anshul Kapoor", { html: false })
+  }
+}
+
+class BodyTransformer {
+  constructor(attributeName) {
+    this.attributeName = attributeName
+  }
+  element(element) {
+    const attribute = element.getAttribute("class")
+    element.setAttribute("class","bg-purple-800")
   }
 }
 
@@ -86,7 +100,8 @@ const rewriter = new HTMLRewriter()
   .on("img#avatar", new ImageTransformer())
   .on("h1#name", new HeadingTransformer())
   .on("div#social", new SocialDivTransformer())
-  
+  .on("title", new TitleTransformer())
+  .on("body", new BodyTransformer())
 
 async function handleRequest(request) {
     const r = new Router()
